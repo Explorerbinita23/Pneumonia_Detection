@@ -37,6 +37,7 @@ model.compile(
     loss='binary_crossentropy',
     metrics=['accuracy']
 )
+
 ✨ What happens here?
 Adam optimizer:
 Combines the best of SGD (momentum) and RMSprop (adaptive learning rate).
@@ -53,8 +54,8 @@ Tracks the proportion of correct predictions.
 early_stopping = EarlyStopping(monitor='val_loss', patience=5, restore_best_weights=True)
 reduce_lr = ReduceLROnPlateau(monitor='val_loss', factor=0.5, patience=3, min_lr=1e-5)
 checkpoint = ModelCheckpoint('best_model.h5', save_best_only=True, monitor='val_accuracy', mode='max')
-
 callbacks = [early_stopping, reduce_lr, checkpoint]
+
 #### ✨ What are Callbacks?
 Callbacks help control training without manual intervention:
 
@@ -69,6 +70,7 @@ Saves the best-performing model after every epoch — ensures you don’t lose t
 test_loss, test_accuracy = model.evaluate(test_generator)
 print(f'Test Loss: {test_loss}')
 print(f'Test Accuracy: {test_accuracy * 100:.2f}%')
+
 ✨ Why evaluate?
 Test loss: Shows how well the model performs on completely new data — lower is better.
 Test accuracy: Percentage of correct predictions on test data.
@@ -76,6 +78,7 @@ Test accuracy: Percentage of correct predictions on test data.
 y_true = test_generator.classes
 y_pred = (model.predict(test_generator) > 0.5).astype(int)
 print(classification_report(y_true, y_pred))
+
 ✨ Why metrics matter:
 Classification report: Shows precision, recall, and F1-score:
 Precision: How many of the predicted Pneumonia cases were correct?
@@ -88,6 +91,7 @@ sns.heatmap(cm, annot=True, fmt='d', cmap='Blues', xticklabels=['Normal', 'Pneum
 plt.xlabel('Predicted')
 plt.ylabel('Actual')
 plt.show()
+
 ✨ What’s a Confusion Matrix?
 True Positives (TP): Pneumonia correctly predicted.
 True Negatives (TN): Normal correctly predicted.
